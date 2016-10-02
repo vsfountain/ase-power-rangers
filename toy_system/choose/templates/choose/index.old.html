@@ -1,0 +1,9 @@
+{% if list_of_pie %}
+    <ul>
+    {% for dishes in list_of_pie %}
+        <li>{{ dishes.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No dishes in the menu</p>
+{% endif %}

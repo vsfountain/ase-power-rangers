@@ -1,0 +1,16 @@
+<h1>{{ "Choose the PIE" }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'submit' %}" method="post">
+name:<br>
+<input type="text" name="name">
+<br>
+
+{% csrf_token %}
+{% for dish in list_of_pie.all %}
+    <input type="checkbox" name="dish{{ dish.id }}" id="dish{{ forloop.counter }}" value="1" />
+    <label for="dish{{ forloop.counter }}">{{ dish.name }}</label><br />
+{% endfor %}
+<input type="submit" value="Submit" />
+</form>

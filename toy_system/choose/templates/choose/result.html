@@ -1,0 +1,12 @@
+<h1>Order Success!!</h1>
+<p>hi! {{ cust.name }}. Here is your order detail. </p>
+
+<ul>
+{% for orderrecord in menu %}
+    <li>{{ orderrecord.name }} -- ${{ orderrecord.cost }}</li>
+{% endfor %}
+</ul>
+
+<p> The total price is ${{cust.total_price}}</p>
+
+<a href="{% url 'index' %}">Order again</a>
