@@ -13,3 +13,5 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
+def results(request):
+	return render(request, 'menu/results.html')
