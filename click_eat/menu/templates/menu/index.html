@@ -1,0 +1,24 @@
+{% if item_list %}
+    
+    <!-- <ul>
+    {% for item in item_list %}
+        <li><a href="/menu/{{ item.id }}/">{{ item.item_name }}</a></li>
+    {% endfor %}
+    </ul>
+    -->
+
+    <h1>Menu</h1>
+
+    <p></p>
+    <form method="post">
+    {% csrf_token %}
+    {% for item in item_list %}
+        <input type="checkbox" name="item" id="item{{ forloop.counter }}" value="{{ item.id }}" />
+        <label for="item{{ forloop.counter }}">{{ item.item_name }}</label><br />
+    {% endfor %}<p></p>
+    <input type="submit" value="Order" />
+    </form>
+
+{% else %}
+    <p>No menu items available</p>
+{% endif %}
