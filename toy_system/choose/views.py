@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-
+from django.http import Http404
 # Create your views here.
 from django.http import HttpResponseRedirect
 #from django.template import loader
@@ -18,17 +18,15 @@ def index(request):
 
 def submit(request):
     '''submit view, the view after submission'''
-    cust = CustRecord(name=request.POST["name"], time=timezone.now())
+    cust = CustRecord(name=request.POST["name"])
     price = 0
     cust.save()
     menu = Menu.objects.all()
     for dish in menu:
-        try:
-            _ = request.POST['dish' + str(dish.id)]
-            price += dish.cost
-            cust.orderrecord_set.create(dish_id=dish)
-        except:
-            continue
+        quant = int(request.POST['dish' + str(dish.id)])
+        if quant != 0:
+            cust.orderrecord_set.create(dish_id=dish, quantity = quant)
+            price += dish.cost * quant
     cust.total_price = price
     cust.save()
     return HttpResponseRedirect(reverse('result', args=(cust.id,)))
@@ -36,8 +34,17 @@ def submit(request):
 def result(request, cust_id):
     '''result view, redirect from submit view, show result'''
     cust = get_object_or_404(CustRecord, pk=cust_id)
-    cust_order = cust.orderrecord_set.all()
-    menu_array = []
-    for i in cust_order:
-        menu_array.append(i.dish_id)
-    return render(request, 'choose/result.html', {'cust': cust, 'menu':menu_array})
+    return render(request, 'choose/result.html', {'cust': cust})
+
+def detail(request):
+    print "aa"
+    if request.method == "POST":
+        dish_id = request.POST['dish_id']
+        dish = get_object_or_404(Menu, id = dish_id)
+        context = {
+            'dish':dish,
+        }
+        return render(request,'choose/detail.html',context)
+    else:
+        raise Http404("")
+
