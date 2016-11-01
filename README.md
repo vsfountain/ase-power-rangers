@@ -18,6 +18,9 @@ http://127.0.0.1:8000/admin for the admin view.
 AUTHORS:
 --------
 Edwin Chan
+
 Brandon Huang
+
 Kuo Zhang
+
 Vanessa Fountain
