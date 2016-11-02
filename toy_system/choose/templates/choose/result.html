@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Your Order</h1>
+<p>{{ cust.name }}. Here is your order detail. </p>
+<hr>
+{% for orderrecord in cust.cust_order.all %}
+    <p><b>{{ orderrecord.dish_id.name }}</b></p>
+    <p>${{ orderrecord.dish_id.cost }} * {{orderrecord.quantity}}</p>
+{% endfor %}
+<hr>
+<p> Total price: ${{cust.total_price}}</p>
+
+<a href="{% url 'index' %}">Order again</a>
+
+{% endblock %}

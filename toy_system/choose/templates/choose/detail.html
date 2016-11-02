@@ -1,0 +1,5 @@
+<hr>
+<p>{{dish.name}} ${{dish.cost}}</p>
+{% for image in dish.menu_image.all %}
+<img src={{image.photo.url}} height="100">
+{% endfor %}

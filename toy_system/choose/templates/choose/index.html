@@ -1,0 +1,42 @@
+
+{% extends "base.html" %}
+{% block script %}
+<script>
+$(function(){
+	$('p.dish').click(function(){
+		console.log("aa")
+		$.post("{% url 'detail' %}",
+		{
+			'dish_id': this.id,
+			'csrfmiddlewaretoken': '{{ csrf_token }}'
+		},
+		function(data, status){
+        	$('div#dish_detail').html(data)
+    	})
+	})
+})
+</script>
+{% endblock %}
+
+{% block content %}
+
+<h1>Menu</h1>
+<hr>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'submit' %}" method="post">
+<p>name: <input type="text" name="name"></p>
+<hr>
+
+{% csrf_token %}
+{% for dish in list_of_pie.all %}
+	<U><p class = 'dish' id = '{{dish.id}}'>{{ dish.name }} (${{dish.cost}}) </p></U>
+    <input type="number" name="dish{{ dish.id }}" id="dish{{ forloop.counter }}" value = "0" min="0" max="99"/>
+    <br>
+{% endfor %}
+<hr>
+<input type="submit" value="Submit" />
+</form>
+<div id = 'dish_detail'>
+</div>
+{% endblock %}
