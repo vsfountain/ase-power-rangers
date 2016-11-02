@@ -37,7 +37,7 @@ def result(request, cust_id):
     return render(request, 'choose/result.html', {'cust': cust})
 
 def detail(request):
-    print "aa"
+    print ("aa")
     if request.method == "POST":
         dish_id = request.POST['dish_id']
         dish = get_object_or_404(Menu, id = dish_id)
